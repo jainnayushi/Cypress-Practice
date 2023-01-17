@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import List from "./List";
 import Alert from "./Alert";
+import Trial from "./Trial";
+
 const getLocalStorage = () => {
   let list = localStorage.getItem("list");
   if (list) {
@@ -9,6 +11,7 @@ const getLocalStorage = () => {
     return [];
   }
 };
+
 function App() {
   const [name, setName] = useState(""); // Input entered
   const [list, setList] = useState(getLocalStorage());
@@ -63,34 +66,43 @@ function App() {
   }, [list]);
 
   return (
-    <section className="section-center">
-      <form className="notion-form" onSubmit={handleSubmit}>
-        {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
+    <div>
+      <section className="section-center">
+        <form className="notion-form" onSubmit={handleSubmit}>
+          {alert.show && (
+            <Alert {...alert} removeAlert={showAlert} list={list} />
+          )}
 
-        <h3>Notion Remake</h3>
-        <div className="form-control">
-          <input
-            type="text"
-            className="notion"
-            placeholder="Enter Task"
-            data-input ="input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <button type="submit" className="submit-btn" data-submit ="submit">
-            {isEditing ? "Edit" : "Submit"}
-          </button>
-        </div>
-      </form>
-      {list.length > 0 && (
-        <div className="notion-container">
-          <List items={list} removeItem={removeItem} editItem={editItem} />
-          <button className="clear-btn" onClick={clearList} data-clear = "clear">
-            clear items
-          </button>
-        </div>
-      )}
-    </section>
+          <h3>Notion Remake</h3>
+          <div className="form-control">
+            <input
+              type="text"
+              className="notion"
+              placeholder="Enter Task"
+              data-input="input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <button type="submit" className="submit-btn" data-submit="submit">
+              {isEditing ? "Edit" : "Submit"}
+            </button>
+          </div>
+        </form>
+        {list.length > 0 && (
+          <div className="notion-container">
+            <List items={list} removeItem={removeItem} editItem={editItem} />
+            <button
+              className="clear-btn"
+              onClick={clearList}
+              data-clear="clear"
+            >
+              clear items
+            </button>
+            <Trial />
+          </div>
+        )}
+      </section>
+    </div>
   );
 }
 

@@ -3,9 +3,29 @@
 describe("Notion tests", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/");
+    cy.wait(1000);
   });
   it("Check Landing Page", () => {
     cy.contains("Notion");
+  });
+  it.only("Add Tasks", () => {
+    cy.contains("Task 1").should("not.exist");
+    cy.get('[data-input ="input"]').as("input").type("Task 1");
+    cy.get('[data-submit ="submit"]').as("submit").click();
+    cy.contains("Task 1").should("exist");
+    cy.contains("item added to the list");
+
+    cy.contains("Task 2").should("not.exist");
+    cy.get("@input").type("Task 2");
+    cy.get("@submit").click();
+    cy.contains("Task 2").should("exist");
+    cy.contains("item added to the list");
+
+    cy.contains("Task 3").should("not.exist");
+    cy.get("@input").type("Task 3");
+    cy.get("@submit").click();
+    cy.contains("Task 3").should("exist");
+    cy.contains("item added to the list");
   });
   it("Edit Task 1", () => {
     cy.contains("Task 1").should("not.exist");
@@ -13,13 +33,11 @@ describe("Notion tests", () => {
     cy.get('[data-submit ="submit"]').click();
     cy.contains("Task 1").should("exist");
     cy.contains("item added to the list");
-
     cy.contains("Task 2").should("not.exist");
     cy.get('[data-input ="input"]').type("Task 2");
     cy.get('[data-submit ="submit"]').click();
     cy.contains("Task 2").should("exist");
     cy.contains("item added to the list");
-
     cy.contains("Task 3").should("not.exist");
     cy.get('[data-input ="input"]').type("Task 3");
     cy.get('[data-submit ="submit"]').click();
@@ -39,13 +57,11 @@ describe("Notion tests", () => {
     cy.get('[data-submit ="submit"]').click();
     cy.contains("Task 1").should("exist");
     cy.contains("item added to the list");
-
     cy.contains("Task 2").should("not.exist");
     cy.get('[data-input ="input"]').type("Task 2");
     cy.get('[data-submit ="submit"]').click();
     cy.contains("Task 2").should("exist");
     cy.contains("item added to the list");
-
     cy.contains("Task 3").should("not.exist");
     cy.get('[data-input ="input"]').type("Task 3");
     cy.get('[data-submit ="submit"]').click();
@@ -63,13 +79,11 @@ describe("Notion tests", () => {
     cy.get('[data-submit ="submit"]').click();
     cy.contains("Task 1").should("exist");
     cy.contains("item added to the list");
-
     cy.contains("Task 2").should("not.exist");
     cy.get('[data-input ="input"]').type("Task 2");
     cy.get('[data-submit ="submit"]').click();
     cy.contains("Task 2").should("exist");
     cy.contains("item added to the list");
-
     cy.contains("Task 3").should("not.exist");
     cy.get('[data-input ="input"]').type("Task 3");
     cy.get('[data-submit ="submit"]').click();
@@ -79,24 +93,5 @@ describe("Notion tests", () => {
     cy.get('[data-clear ="clear"]').click();
     cy.contains("empty list", { timeout: 2 * 1000 }).should("exist");
     cy.contains("empty list", { timeout: 4 * 1000 }).should("not.exist");
-  });
-  it("Add Tasks", () => {
-    cy.contains("Task 1").should("not.exist");
-    cy.get('[data-input ="input"]').type("Task 1");
-    cy.get('[data-submit ="submit"]').click();
-    cy.contains("Task 1").should("exist");
-    cy.contains("item added to the list");
-
-    cy.contains("Task 2").should("not.exist");
-    cy.get('[data-input ="input"]').type("Task 2");
-    cy.get('[data-submit ="submit"]').click();
-    cy.contains("Task 2").should("exist");
-    cy.contains("item added to the list");
-
-    cy.contains("Task 3").should("not.exist");
-    cy.get('[data-input ="input"]').type("Task 3");
-    cy.get('[data-submit ="submit"]').click();
-    cy.contains("Task 3").should("exist");
-    cy.contains("item added to the list");
   });
 });
