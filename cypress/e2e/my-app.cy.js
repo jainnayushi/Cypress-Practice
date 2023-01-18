@@ -8,12 +8,13 @@ describe("Notion tests", () => {
   it("Check Landing Page", () => {
     cy.contains("Notion");
   });
-  it.only("Add Tasks", () => {
+  it("Add Tasks", () => {
     cy.contains("Task 1").should("not.exist");
     cy.get('[data-input ="input"]').as("input").type("Task 1");
     cy.get('[data-submit ="submit"]').as("submit").click();
     cy.contains("Task 1").should("exist");
     cy.contains("item added to the list");
+    // cy.log("Task 1 Checked")
 
     cy.contains("Task 2").should("not.exist");
     cy.get("@input").type("Task 2");
